@@ -1,0 +1,71 @@
+medRxiv disclosures — DentaCoPilot
+====================================
+
+Use these statements when prompted by the medRxiv submission form.
+
+----
+
+COMPETING INTERESTS
+
+C.C.R. is the founder of CELABE, a research-focused entity. CELABE has not
+filed any patent and has no commercial product related to this work. S.D.R.
+declares no competing interests.
+
+----
+
+FUNDING
+
+This research was self-funded by CELABE. No external grant supported this
+work. S.D.R.'s contribution is unfunded and forms part of her academic
+research record. Anthropic provided no financial support and was not
+involved in the design, conduct, or reporting of this research.
+
+----
+
+DATA AVAILABILITY
+
+The synthetic chart corpus generator, all baseline and large-language-model
+implementations, the evaluation harness, the calibration / abstention
+analysis, and per-call prompt + response logs for every LLM inference call
+are open-sourced under the MIT licence at: https://github.com/[REPO_URL] —
+Carson to fill in the public repository URL on submission.
+
+The BigMouth and KLE clinical evaluations referenced in the paper as future
+work require access agreements; raw clinical data is not redistributed by
+this work.
+
+----
+
+ETHICS
+
+This paper reports synthetic-data results only. No human subjects, no
+patient-identifiable data, no animal research. Future clinical evaluation
+at KLE Vishwanath Katti Institute of Dental Sciences will be conducted
+under an approved institutional ethics protocol (draft in the repository
+at notes/kle-irb-protocol.md).
+
+----
+
+AI DECLARATION
+
+This manuscript was prepared with assistance from Anthropic Claude (Claude
+Code). Specifically, Claude was used for code scaffolding, draft prose
+authoring, and reference management. The authors verified every claim,
+edited all generated text, and take full responsibility for the content.
+The Claude model is also a direct subject of this work: every experimental
+LLM inference call was routed through the local Anthropic Claude Code CLI
+(rather than the metered Anthropic API), with prompts and responses
+logged for full auditability. See §1 paragraph "Compute through Claude
+Code" in the manuscript.
+
+----
+
+AUTHOR CONTRIBUTIONS (CRediT taxonomy)
+
+C.C.R.: Conceptualization, Methodology, Software, Formal analysis, Data
+curation, Writing — original draft, Writing — review and editing,
+Visualization, Supervision.
+
+S.D.R.: Methodology (clinical), Validation, Investigation, Resources
+(KLE access), Writing — review and editing, Project administration
+(KLE-side IRB and clinician recruitment forthcoming).

@@ -1,0 +1,132 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true, urlcolor=blue}
+
+\title{\textbf{Code Repository Overview --- DentaCoPilot}\\
+\large Open-source pipeline accompanying the BigMouth project proposal}
+\author{Carson Conception Rodrigues (CELABE)\\
+Steffie Dione Rebello (KLE Vishwanath Katti Institute of Dental Sciences)}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Repository}\quad
+[\textbf{TODO: insert public Git URL when published}]\quad
+\textit{(MIT licence; private during development, public at submission.)}
+
+\bigskip
+
+\section*{Quick orientation}
+
+The DentaCoPilot codebase implements every model evaluated in the
+manuscript, the synthetic chart generator that produced the corpus, and
+the audit / replay infrastructure that makes the run records reviewable.
+
+\section*{Layout}
+
+\begin{verbatim}
+07-dental-procedure-prediction/
+|-- draft/paper.tex             full manuscript
+|-- references/references.bib   46-entry bibliography
+|-- figures/                    fig1..fig5 (PDF + PNG)
+|-- data/
+|   |-- cc_compute.py           Claude Code subprocess wrapper (single chokepoint)
+|   |-- cc_compute_test.py      smoke test
+|   |-- cdt_codes.py            CDT 2024 vocabulary + category map
+|   |-- tooth.py                Universal/FDI tooth-numbering helpers
+|   |-- synth_charts.py         synthetic chart generator (5 archetypes)
+|   |-- evaluate.py             single CLI entry point for all experiments
+|   |-- calibration.py          temperature scaling, ECE, reliability curves
+|   |-- abstention.py           coverage-risk, threshold selection
+|   |-- hybrid_analysis.py      confidence-routed gating sweep
+|   |-- retrieval.py            BM25 over the open evidence corpus
+|   |-- evidence_corpus/        20 paraphrased clinical-practice cards
+|   |-- loaders/                DENTEX, MMDental, DenPAR public-data loaders
+|   |-- models/
+|   |   |-- base.py             Model interface
+|   |   |-- b0_bigram.py        B0 frequency bigram
+|   |   |-- b1_tfidf_lr.py      B1 TF-IDF + LR
+|   |   |-- b2_xgboost.py       B2 XGBoost
+|   |   |-- b3_multitp.py       B3 MultiTP-style CNN-RNN
+|   |   |-- llm_base.py         shared LLM scaffolding
+|   |   |-- m1_haiku.py         M1
+|   |   |-- m2_sonnet_cot.py    M2
+|   |   |-- m3_sonnet_rag.py    M3
+|   |   |-- m4_opus.py          M4
+|   |   |-- m5_sonnet_baseline_primed.py    M5 (proposed forward design)
+|   |   |-- m6_opus_baseline_primed.py      M6
+|   |-- requirements.txt        pinned, anthropic SDK deliberately absent
+|   |-- README.md
+|   |-- results_*/              every experimental run record
+|-- notes/                      planning, IRB, BigMouth proposal, preregistration
+|-- submission/                 medRxiv / arXiv / OSF submission bundles
+|-- Makefile                    smoke / full / pdf / docx / verify / finalize
+|-- build.sh                    self-contained PDF + DOCX builder (per-paper)
+\end{verbatim}
+
+\section*{How a reviewer can audit our work in 30 minutes}
+
+\begin{enumerate}
+    \item Clone the repository.
+    \item \texttt{cd 07-dental-procedure-prediction \&\& make smoke}
+    runs the full Stage-1 pipeline (CDT vocabulary $\to$ synthetic chart
+    generation $\to$ B0/B1/B2 baselines $\to$ figures) end-to-end without
+    spending any Claude Code quota.
+    \item Inspect any \texttt{data/results\_<run>/llm\_calls.jsonl} ---
+    every LLM call is logged with full prompt, full response, latency,
+    and token counts. The reviewer can read the model's reasoning on any
+    individual case without re-running anything.
+    \item \texttt{make verify} runs the no-anthropic-SDK CI check
+    (the grep guard ensuring no metered API path can be introduced).
+\end{enumerate}
+
+\section*{Reproducibility primitives}
+
+\begin{itemize}\itemsep0pt
+    \item \textbf{Seeds}: \texttt{random.seed(42)},
+    \texttt{numpy.random.seed(42)}, \texttt{torch.manual\_seed(42)} at the
+    top of every script.
+    \item \textbf{Run records}: \texttt{config.json} (git SHA + seed +
+    CLI args + Python version + platform), \texttt{results.json}
+    (per-trial predictions), \texttt{summary.json} (aggregated metrics),
+    \texttt{llm\_calls.jsonl} (every LLM call).
+    \item \textbf{Determinism}: re-running a baseline with the same seed
+    produces byte-identical \texttt{summary.json}; LLM models reproduce
+    within stochastic tolerance documented in the manuscript.
+\end{itemize}
+
+\section*{Compute substrate}
+
+A central design choice: every LLM inference call goes through the local
+Anthropic Claude Code CLI rather than the metered Anthropic API. The
+single subprocess wrapper at \texttt{data/cc\_compute.py} invokes
+\texttt{claude -p ...\ --output-format json} and parses the structured
+response. The full call record is logged to a per-run JSONL audit
+trail.
+
+\section*{What we will share with BigMouth}
+
+\begin{itemize}\itemsep0pt
+    \item Read access to the live private repository for the BigMouth
+    project review committee, on request.
+    \item A short live walk-through (videoconference) of any module the
+    committee wants to inspect, on request.
+    \item Public open-source release on the project's accepted-paper
+    publication date; MIT licence; no patient data in the repository.
+\end{itemize}
+
+\bigskip
+
+\hrule
+\bigskip
+
+\noindent For repository questions, contact
+\href{mailto:carson@celabe.com}{carson@celabe.com}.
+
+\end{document}

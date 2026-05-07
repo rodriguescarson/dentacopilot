@@ -1,0 +1,56 @@
+arXiv endorsement request — template
+======================================
+
+Use this verbatim or lightly customized. The ask is small and one-time,
+so the email should be very short.
+
+Suggested recipients (in priority order):
+
+1. Oysturn Vas (University of Waterloo) — your Voice AI Latency
+   Optimization (Paper 1) co-author. Most likely to say yes.
+2. Authors of MultiTP (Liu et al., AIM 2024) — directly cited as the
+   prior-art comparator. We're MultiTP's LLM analogue, so the
+   intellectual lineage gives a natural reason to engage.
+3. Authors of DENTEX (Hamamci et al., MICCAI 2023) — open-data
+   community, very arXiv-friendly.
+
+----
+
+Subject: arXiv cs.CL endorsement request — DentaCoPilot
+
+Hi [Name],
+
+I'm submitting my first paper to arXiv (cs.CL primary, cs.LG / cs.AI
+secondary) and arXiv flagged the standard endorsement requirement for
+new submitters in those categories.
+
+The paper: *DentaCoPilot: An LLM-Augmented Next-Procedure Recommender
+for General Dentistry, Designed for Dentist Augmentation* (Rodrigues &
+Rebello, 2026). It's a clinician-augmentation framework for dental
+treatment-sequence prediction; we route all LLM compute through Claude
+Code, keep an audit trail of every call, and report calibration +
+abstention plus a clean negative result on retrieval augmentation. The
+abstract is at the bottom of this email; the full PDF is attached.
+
+Would you be willing to endorse me for cs.CL? It's a single click via
+the link below — no review involved, just a confirmation that the work
+is plausibly in scope. The endorsement is one-time per category; I'd
+ask once and never again.
+
+Endorsement link:
+  https://arxiv.org/auth/endorse?x=[carson-fills-this-from-arxiv]
+
+If you'd rather not, no hard feelings — happy to seek another endorser.
+
+Thanks for considering,
+
+Carson Conception Rodrigues
+CELABE — carson@celabe.com
+
+[paste abstract here at the bottom of the email so they can read in one
+glance — copy from submission/arxiv-cover.txt]
+
+----
+
+Tip: include the PDF attachment so the endorser can do a 30-second
+plausibility check. Don't make them go fetch it.

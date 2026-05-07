@@ -1,0 +1,29 @@
+# Paper 7 — DentaCoPilot
+
+# Build artifacts
+build/
+data/__pycache__/
+data/.pytest_cache/
+**/*.pyc
+
+# Datasets — never commit raw data
+data/cache/
+data/raw/
+
+# Generated PNGs (we keep PDFs; PNGs are derived for DOCX embedding)
+# (kept commented because the DOCX build needs them at submission time)
+# figures/*.png
+
+# Run results — kept; they are the experimental record. Reviewers should see them.
+# data/results_*/   ← intentionally NOT ignored
+
+# venv
+venv/
+.venv/
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/

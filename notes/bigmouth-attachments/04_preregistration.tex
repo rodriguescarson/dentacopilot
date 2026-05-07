@@ -1,0 +1,167 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue}
+
+\title{\textbf{Pre-registration --- DentaCoPilot}\\
+\large Clinician-in-the-loop evaluation, BigMouth multi-institutional cohort,
+KLE V K Institute of Dental Sciences clinician arm}
+
+\author{Carson Conception Rodrigues (CELABE) \\
+Steffie Dione Rebello (KLE Vishwanath Katti Institute of Dental Sciences)}
+\date{Drafted 2026-05-XX --- final version locked on OSF prior to test-split unblinding}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status:} \textit{Draft. The final version of this document
+will be deposited on the Open Science Framework (OSF) before any clinician
+participates and before the test split of the BigMouth or KLE data is read.
+The OSF DOI will be cited in the final manuscript's methods section.}
+
+\section{Research questions}
+
+\begin{itemize}
+    \item \textbf{RQ1.} Does an LLM-based next-procedure recommender
+    (DentaCoPilot, arm C) improve dentists' top-1 agreement with retrospective
+    ground-truth treatment relative to dentist-alone (arm A) and a classical
+    XGBoost recommender (arm B)?
+    \item \textbf{RQ2.} Does it reduce time-to-decision relative to arms A and B?
+    \item \textbf{RQ3.} Is calibrated abstention (arm C abstains when
+    confidence below $\tau$) associated with appropriate dentist behavior ---
+    i.e., do dentists override less often on covered cases than on cases where
+    the system abstains?
+\end{itemize}
+
+\section{Hypotheses}
+
+\textbf{H1 (primary).} Mean top-1 agreement is highest in arm C, with the
+contrast C vs A statistically significant at $\alpha = 0.05$, two-sided.
+
+\textbf{H2 (secondary).} Mean time-to-decision in arm C is at most 10\%
+higher than in arm A. We pre-commit to a non-inferiority contrast on time, so
+we cannot win on accuracy by burying a time regression.
+
+\textbf{H3 (exploratory).} Override rate on covered cases is below override
+rate on abstained cases.
+
+\section{Design}
+
+Within-subject crossover. Each dentist sees three blocks of $\sim$33 cases
+under arms A / B / C, block-to-arm randomized per dentist via Latin square.
+Cases are stratified to span all nine CDT categories with weights matching
+KLE's actual case mix.
+
+\section{Sample size}
+
+Target $N = 12$ dentists $\times$ $\sim$33 cases per arm $\approx$ 400
+case-arm observations per arm. Mixed-effects logistic regression (random
+intercept per dentist) gives $\geq 80\%$ power to detect a Cohen's $d = 0.4$
+difference in agreement at $\alpha = 0.05$. If recruitment falls below
+$N = 8$, the study is reframed as a \textit{pilot} with descriptive results
+only and \textbf{no inferential claims}.
+
+\section{Primary outcome}
+
+Top-1 agreement (binary) between dentist's pick and retrospective
+ground-truth procedure code (exact CDT match), per case-arm observation.
+Analyzed via mixed-effects logistic regression with random intercepts for
+dentist and for case, fixed effect for arm (treatment-coded with arm A as
+reference).
+
+\section{Secondary outcomes}
+
+\textbf{S1.} Top-1 agreement allowing CDT \textit{category} match instead of
+exact code (more lenient definition).
+
+\textbf{S2.} Time-to-decision (seconds), log-transformed for analysis.
+Random intercept per dentist.
+
+\textbf{S3.} Override rate in arms B and C: probability that the dentist's
+final pick differs from the recommender's top-1, given that the recommender
+provided a recommendation.
+
+\textbf{S4.} Trust (Likert 1--5), per case, per arm where applicable.
+
+\section{Models trained on the dev split (locked specification)}
+
+\begin{itemize}
+    \item B0 --- frequency baseline.
+    \item B1 --- TF-IDF + multinomial logistic regression on chart-token features.
+    \item B2 --- XGBoost on engineered chart-history features.
+    \item B3 --- MultiTP-style CNN--RNN reimplementation (Liu et al.\ AIM 2024).
+    \item M1 --- Claude Haiku, structured prompt, top-K + verbalised confidence + abstain.
+    \item M2 --- Claude Sonnet + chain-of-thought.
+    \item M3 --- Claude Sonnet + retrieval over the open clinical evidence corpus.
+    \item M4 --- Claude Opus + chain-of-thought.
+    \item M5 --- Claude Sonnet + chain-of-thought \textbf{+ classical prior} (proposed forward design).
+    \item M6 --- Claude Opus + chain-of-thought + classical prior.
+\end{itemize}
+
+For the clinical-evaluation arm (B vs C contrast), the \textit{frozen} models
+are: \textbf{B = B2 (XGBoost)} and \textbf{C = M5 (Sonnet + classical prior)}
+unless dev-split evaluation on real data identifies a clear winner among M1
+through M6 by calibrated top-1 accuracy on the dev split, locked before
+test-split unblinding.
+
+\section{Calibration and abstention}
+
+\begin{itemize}
+    \item Temperature scaling on the dev split.
+    \item Verbalized confidence prompt: model returns a self-rated confidence
+    in $\{$low, medium, high$\}$, mapped to thresholds.
+    \item \textbf{Abstention threshold $\tau$} is selected on the dev split as
+    the smallest $\tau$ that achieves $\geq 95\%$ precision on covered cases
+    at $\geq 50\%$ coverage. \textbf{Locked before test-split unblinding.}
+\end{itemize}
+
+\section{Stopping rules}
+
+If the dev-split top-1 accuracy of the best LLM-based model is below the
+XGBoost baseline by more than 3 percentage points, the LLM arm is
+\textbf{not} taken to the clinical study; the paper reports a negative
+result.
+
+If recruitment yields fewer than 8 dentists, the study is reported as a
+pilot with descriptive results only; no inferential test is run on H1--H3.
+
+\section{Analyses we will NOT run}
+
+\begin{itemize}
+    \item We will not split the test set further ``to find a subset where C wins.''
+    \item We will not change the abstention threshold $\tau$ after seeing the test split.
+    \item We will not switch from exact CDT match to category match after seeing results.
+    \item We will not drop dentists from analysis based on their performance.
+\end{itemize}
+
+Any post-hoc analyses are clearly labeled as exploratory and will not be used
+to support the primary claims.
+
+\section{Reproducibility}
+
+\begin{itemize}
+    \item All code open-sourced (MIT) at submission.
+    \item All seeds fixed (\texttt{random.seed(42); numpy.seed(42); torch.manual\_seed(42)}).
+    \item All LLM calls logged to \texttt{data/results\_<run>/llm\_calls.jsonl} with prompt, response, model, latency, and token counts.
+    \item A reviewer can replay every call from the logs without spending money on the Anthropic API; if they wish to re-execute, they do so through their own Claude Code subscription.
+    \item This pre-registration's OSF DOI will be cited in the paper's methods section.
+\end{itemize}
+
+\bigskip
+
+\hrule
+\bigskip
+
+\noindent\textbf{Authors' declaration.} The authors declare that this
+pre-registration is final at the time of OSF deposit. Any deviations from
+this plan during data analysis will be documented in the manuscript as
+exploratory.
+
+\bigskip
+
+\noindent
+Carson Conception Rodrigues, PI \hfill Steffie Dione Rebello, Co-PI
+
+\end{document}

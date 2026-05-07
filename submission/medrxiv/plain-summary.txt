@@ -1,0 +1,29 @@
+Plain-language summary (for medRxiv) — DentaCoPilot
+=====================================================
+
+(Plain-English version of the abstract for non-specialist readers. Aim for
+~150 words; medRxiv accepts up to 200.)
+
+----
+
+Most artificial intelligence tools used in dentistry today help dentists
+read dental X-rays — they spot cavities, gum-disease bone loss, or
+infections in images. None of them help with the harder question that
+follows: given everything in a patient's dental record, what should the
+dentist do next? Should this tooth get a filling, a root canal, or a
+crown? Should this patient come back in three months or six?
+
+We built DentaCoPilot, a software tool that uses a large language model
+(an AI like ChatGPT) to suggest the next dental procedure for a patient,
+together with a brief explanation grounded in their chart. The tool is
+designed to support a dentist's decision, not replace it: it suggests
+multiple possibilities ranked by probability, says how confident it is,
+and explicitly says "I don't know" when the patient's record is too thin
+to be sure.
+
+This paper describes the tool's design, evaluates eight versions of it on
+a synthetic dental record dataset, and reports that combining a
+traditional statistical model with a language model gives the best
+results. Real-patient evaluation at the KLE Vishwanath Katti Institute of
+Dental Sciences and the BigMouth multi-school dental record repository is
+the next step.

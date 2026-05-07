@@ -1,0 +1,68 @@
+arXiv submission metadata — DentaCoPilot
+==========================================
+
+Title (paste verbatim into arXiv title field):
+
+  DentaCoPilot: An LLM-Augmented Next-Procedure Recommender for General
+  Dentistry, Designed for Dentist Augmentation
+
+Authors:
+
+  Carson Conception Rodrigues (CELABE)
+  Steffie Dione Rebello (KLE Vishwanath Katti Institute of Dental Sciences,
+                         Belgaum, India)
+
+Corresponding author:  Carson Conception Rodrigues  <carson@celabe.com>
+
+Primary category:    cs.CL    (Computation and Language)
+Secondary categories:
+  cs.LG    (Machine Learning)
+  cs.AI    (Artificial Intelligence)
+  q-bio.QM (Quantitative Methods)
+
+License: arXiv non-exclusive license to distribute (default)
+
+Comments line (one paragraph; arXiv shows this on the abstract page):
+
+  Code, run records, and the synthetic chart corpus generator are
+  open-sourced (MIT). All large language model inference in this work
+  was routed through the local Anthropic Claude Code CLI; per-call
+  prompts, responses, latencies, and token counts are committed to the
+  repository for full reviewer audit.
+
+Abstract (use the one in §0 of paper.tex; ~250 words):
+
+  Commercial dental artificial intelligence in 2026 is overwhelmingly
+  diagnostic: caries, calculus, periapical, and bone-level detection on
+  radiographs. The clinically harder question — given a patient's
+  chart and current procedure context, what should the dentist do next
+  — remains unsolved at general-dentistry scale. The closest published
+  system, MultiTP (Liu et al., 2024), is a CNN-RNN restricted to
+  partial edentulism and provides neither calibrated uncertainty,
+  structured rationale, nor an evaluation that treats the model as
+  decision support rather than as an autonomous classifier.
+
+  We introduce DentaCoPilot, a recommender that, given a structured
+  chart and the most recent procedure, returns a calibrated top-K
+  distribution over Current Dental Terminology (CDT) codes for the
+  next procedure, a chart-grounded rationale, and an explicit abstain
+  signal when context is insufficient. The system is built on a small
+  large language model, constrained-decoded to the CDT vocabulary, and
+  calibrated via temperature scaling against verbalized confidence.
+
+  Our central contribution is methodological: we evaluate the system
+  as a clinician-augmenting consult, not as an autonomous classifier,
+  and demonstrate that prompt-conditioning the LLM on a classical
+  baseline's top-K candidates closes the LLM-vs-baseline accuracy gap
+  on synthetic data. We further report calibration, coverage-risk
+  curves, adversarial-input abstention, and a pre-registered
+  clinician-in-the-loop evaluation plan for the BigMouth multi-
+  institutional repository and the KLE Vishwanath Katti Institute of
+  Dental Sciences.
+
+After upload:
+
+- Save the arXiv ID (e.g. 2605.NNNNN).
+- Add it to the IADR 2027 abstract submission as a reference.
+- Include in the BigMouth project proposal email as supplementary
+  material attachment.
