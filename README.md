@@ -4,6 +4,8 @@
 
 Carson Conception Rodrigues (CELABE) · Steffie Dione Rebello (KLE Vishwanath Katti Institute of Dental Sciences, Belgaum, India)
 
+📄 **Preprint:** [medRxiv 10.64898/2026.05.07.26352635](https://medrxiv.org/cgi/content/short/2026.05.07.26352635v1)
+
 ---
 
 ## What this is
@@ -86,7 +88,21 @@ If you use this code or build on the M5 design, please cite:
 ```
 Rodrigues, C. C. & Rebello, S. D. (2026). DentaCoPilot: An LLM-Augmented
 Next-Procedure Recommender for General Dentistry, Designed for Dentist
-Augmentation. Preprint, medRxiv [DOI to be added on posting].
+Augmentation. medRxiv 2026.05.07.26352635.
+https://doi.org/10.64898/2026.05.07.26352635
+```
+
+BibTeX:
+
+```bibtex
+@article{rodrigues2026dentacopilot,
+  title   = {{DentaCoPilot}: An {LLM}-Augmented Next-Procedure Recommender for General Dentistry, Designed for Dentist Augmentation},
+  author  = {Rodrigues, Carson Conception and Rebello, Steffie Dione},
+  journal = {medRxiv},
+  year    = {2026},
+  doi     = {10.64898/2026.05.07.26352635},
+  url     = {https://medrxiv.org/cgi/content/short/2026.05.07.26352635v1}
+}
 ```
 
 ## Licence
